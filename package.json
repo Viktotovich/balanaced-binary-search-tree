@@ -1,0 +1,12 @@
+{
+  "name": "balanaced-binary-search-tree",
+  "version": "1.0.0",
+  "description": "An implementation of a balanced BST. A BST \"allows fast operations for lookup, insertion, and deletion of data items\". My goal is to find a way to implement it, just like I did with the hashMaps.",
+  "main": "bst-logic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC"
+}

@@ -1,3 +1,5 @@
+import sortArray from "./array-sorter.js";
+sortArray("test");
 /* 
     Pseudocode:
         Make the middle element as the root
@@ -12,10 +14,13 @@
     1 - Initialize start 0, end = length of the array - 1
     2 - mid = (mid+end)/ 2
     3 - Create a tree node with mid as root (lets call it A)
+    4 - Recursively do the following:
+        i - Calculate the middle of left subarray and make it root of left subtree of A
+        ii - Calculate mid of right subarray and make it root of right subtree of A
 
-        4 - Recursively do the following:
-            i - Calculate the middle of left subarray and make it root of left subtree of A
-            ii - Calculate mid of right subarray and make it root of right subtree of A
+    Problem to be solved: It looks like the data that we're going to be getting isn't sorted, which means we have to sort the data first. Might mean we have to use the mergeSort - but we also have to eliminate duplicates.
+
+    Also, we need to get rid of duplicates, i.e: 4 and 4 
 */
 
 /*
