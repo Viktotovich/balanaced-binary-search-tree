@@ -1,5 +1,3 @@
-import sortArray from "./array-sorter.js";
-sortArray("test");
 /* 
     Pseudocode:
         Make the middle element as the root
@@ -29,3 +27,32 @@ sortArray("test");
     - Left Subtree is balanced
     - Right Subtree is balanced
 */
+
+/*functions here should not care how it sorts, only know that it does */
+import sortArray from "./array-sorter.js";
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class Tree {
+  constructor(arr) {
+    this.root = this.buildTree();
+  }
+
+  buildTree(arr) {
+    //bingo bango bongo, the dupes are gongo
+    let sortedArr = sortArray(arr);
+    /* we'd need to call something else to make it recursive with 3 args: arr, left arr, right arr. Mid array will be root.
+    
+    We cooould do it in this function itself, but I want more control, and to be more modular*/
+    return;
+  }
+}
+
+//test
+console.log(sortArray([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]));
