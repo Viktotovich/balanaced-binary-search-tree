@@ -1,35 +1,42 @@
-/* 
-    Pseudocode:
-        Make the middle element as the root
-        Do the same for the left and right half
-        The middle of the left half becomes the root
-        The middle of the right half becomes the root
-        Return the tree 
+function sortArray(arr) {
+  let startIndex = 0;
+  let endIndex = arr.length - 1;
 
-    Observations: Root node is middle element of sorted array
+  if (endIndex === 0) {
+    return arr;
+  }
 
-    Algorithm: 
-    1 - Initialize start 0, end = length of the array - 1
-    2 - mid = (mid+end)/ 2
-    3 - Create a tree node with mid as root (lets call it A)
-    4 - Recursively do the following:
-        i - Calculate the middle of left subarray and make it root of left subtree of A
-        ii - Calculate mid of right subarray and make it root of right subtree of A
+  let mid = Math.round((endIndex - startIndex) / 2);
+  let leftArr = arr.slice(0, mid);
+  let rightArr = arr.slice(mid);
 
-    Problem to be solved: It looks like the data that we're going to be getting isn't sorted, which means we have to sort the data first. Might mean we have to use the mergeSort - but we also have to eliminate duplicates.
+  let sortedLeft = sortArray(leftArr);
+  let sortedRight = sortArray(rightArr);
 
-    Also, we need to get rid of duplicates, i.e: 4 and 4 
-*/
+  let mergedArr = [];
+  let indexL = 0;
+  let indexR = 0;
 
-/*
-    A BST is balanced if: 
-    - Height of left subtree and right subtree of root differ by at most 1
-    - Left Subtree is balanced
-    - Right Subtree is balanced
-*/
-
-/*functions here should not care how it sorts, only know that it does */
-import sortArray from "./array-sorter.js";
+  for (let i = 0; i < arr.length; i++) {
+    if (
+      sortedLeft[indexL] > sortedRight[indexR] &&
+      sortedRight[indexR] !== undefined
+    ) {
+      mergedArr.push(sortedRight[indexR]);
+      indexR++;
+    } else if (sortedLeft[indexL] === sortedRight[indexR]) {
+      //get rid of dupes
+      indexR++;
+    } else if (sortedLeft[indexL] !== undefined) {
+      mergedArr.push(sortedLeft[indexL]);
+      indexL++;
+    } else {
+      mergedArr.push(sortedRight[indexR]);
+      indexR++;
+    }
+  }
+  return mergedArr;
+}
 
 class Node {
   constructor(value) {
@@ -76,13 +83,41 @@ class Tree {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   }
+
+  insert(value) {
+    //create a new node if value isn't already in the array
+    let currentNode = this.root;
+    let previousNode;
+
+    while (currentNode !== null) {
+      if (value === currentNode.value) {
+        return;
+      }
+
+      if (value > currentNode.value) {
+        previousNode = currentNode;
+        currentNode = currentNode.right;
+      } else {
+        previousNode = currentNode;
+        currentNode = currentNode.left;
+      }
+    }
+
+    let newValue = new Node(value);
+
+    value > previousNode.value
+      ? (previousNode.right = newValue)
+      : (previousNode.left = newValue);
+  }
 }
 
 //test
 let longList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const test = new Tree(longList);
 test.showRoot();
-console.log(test.sortedArr);
+test.insert(12);
+test.insert(1);
+console.log(test);
 
 /*
   Attempt graveyard:
