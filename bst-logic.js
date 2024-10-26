@@ -41,31 +41,64 @@ class Node {
 
 class Tree {
   constructor(arr) {
-    this.root = this.buildTree();
+    //bingo bango bongo, the dupes are gongo
+    this.sortedArr = sortArray(arr);
+    this.root = this.buildTree(this.sortedArr);
   }
 
-  buildTree(arr) {
-    //bingo bango bongo, the dupes are gongo
-    let sortedArr = sortArray(arr);
-    /* we'd need to call something else to make it recursive with 3 args: arr, left arr, right arr. Mid array will be root.
-    
-    We cooould do it in this function itself, but I want more control, and to be more modular*/
-    return;
+  buildTree(arr) {}
+
+  showRoot() {
+    console.log(this.root);
+  }
+
+  prettyPrint(node, prefix = "", isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
   }
 }
 
 //test
-console.log(sortArray([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]));
+let longList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const test = new Tree(longList);
+test.showRoot();
+console.log(test.sortedArr);
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
+/*
+  Attempt graveyard:
+
+    let startIndex = 0;
+    let endIndex = arr.length - 1;
+
+    if (endIndex === -1) {
+      return null;
+    }
+
+    let midIndex = Math.floor((endIndex - startIndex) / 2);
+    let root = new Node(arr[midIndex]);
+
+    let leftArr = arr.slice(startIndex, midIndex);
+    let rightArr = arr.slice(midIndex + 1);
+
+    console.log(
+      `left arr is ${leftArr}, and right is ${rightArr}, while mid is ${arr[midIndex]}`
+    );
+    //mid is base
+    root.left = this.buildTree(leftArr);
+    root.right = this.buildTree(rightArr);
+
+    return root;
+
+
+    Why it did not work: 
+    1 - Left nodes displayed as [NODE]
+    2 - Start Index was always 0, and that had to do with some numbers being skipped
+*/
