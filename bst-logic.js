@@ -46,7 +46,19 @@ class Tree {
     this.root = this.buildTree(this.sortedArr);
   }
 
-  buildTree(arr) {}
+  buildTree(arr, startIndex = 0, endIndex = arr.length - 1) {
+    if (startIndex > endIndex) {
+      return null;
+    }
+
+    let midIndex = Math.floor((startIndex + endIndex) / 2);
+    let root = new Node(arr[midIndex]);
+
+    root.left = this.buildTree(arr, startIndex, midIndex - 1);
+    root.right = this.buildTree(arr, midIndex + 1, endIndex);
+
+    return root;
+  }
 
   showRoot() {
     console.log(this.root);
